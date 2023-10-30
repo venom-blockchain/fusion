@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 import * as path from 'path';
 import * as fs from 'fs';
 
-export class IndexerInstaller {
+export class Installer {
 
     protected static readonly executable = 'venom-data-producer';
 

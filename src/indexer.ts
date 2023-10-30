@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { stringify } from 'yaml';
 import { spawn } from 'child_process';
-import { IndexerInstaller } from './indexer-installer';
+import { Installer } from './installer';
 import { Transport } from './transport';
 import { TransportStdio } from './transport-stdio';
 import { TransportHttp2 } from './transport-http2';
@@ -15,7 +15,7 @@ import {
 } from './types';
 import { MessageDecoder } from './message-decoder';
 
-export class VenomIndexer {
+export class Indexer {
 
     protected readonly config: IndexerConfig;
     protected readonly skipStart: boolean;
@@ -48,7 +48,7 @@ export class VenomIndexer {
 
     run(subscribers: any) {
         if (!this.skipStart) {
-            const { fullPath, execFullPath } = IndexerInstaller.EnsureInstall(this.config.installPath);
+            const { fullPath, execFullPath } = Installer.EnsureInstall(this.config.installPath);
 
             this.GenerateIndexerConfig(fullPath);
 

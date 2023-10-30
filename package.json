@@ -6,6 +6,11 @@
   "scripts": {
     "build": "tsup src/*.ts --format cjs --dts --minify --clean --sourcemap"
   },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "devDependencies": {
     "typescript": "^5.2.2",
     "@types/node": "^20.8.9",
