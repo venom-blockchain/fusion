@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package venom_data_producer;
+
+enum MessageType {
+  UNSPECIFIED = 0;
+  INTERNAL_INBOUND = 1;
+  INTERNAL_OUTBOUND = 2;
+  EXTERNAL_INBOUND = 3;
+  EXTERNAL_OUTBOUND = 4;
+}
+
+message InternalHeader {
+    bool ihr_disabled = 1;
+    bool bounce = 2;
+    bool bounced = 3;
+    bytes src = 4;
+    bytes dst = 5;
+    bytes value = 6;
+    bytes ihr_fee = 7;
+    bytes fwd_fee = 8;
+    uint64 created_lt = 9;
+    uint32 created_at = 10;
+}
+
+message ExternalInboundHeader {
+    bytes dst = 1;
+}
+
+message ExternalOutboudHeader {
+    bytes src = 1;
+    uint64 created_lt = 2;
+    uint32 created_at = 3;
+}
+
+message Message {
+  bytes id = 1;
+  bytes body_boc = 2;
+  MessageType message_type = 3;
+  oneof message_header {
+    InternalHeader internalHeader = 4;
+    ExternalInboundHeader extInboundHeader = 5;
+    ExternalOutboudHeader extOutboundHeader = 6;
+  }
+  bytes block_id = 7;
+  bytes transaction_id = 8;
+  uint32 transaction_timestamp = 9;
+  uint32 index_in_transaction = 10;
+  string contract_name = 11;
+  string filter_name = 12;
+}
