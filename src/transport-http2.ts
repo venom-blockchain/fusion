@@ -21,7 +21,7 @@ export class TransportHttp2 implements Transport {
         this.url = url;
         this.messageDecoder = decoder;
 
-        const root = loadSync(path.resolve('./src/venom-indexer/venom_data_producer.proto'));
+        const root = loadSync(path.resolve('./venom_data_producer.proto'));
 
         this.message = root.lookupType("Message");
     }
