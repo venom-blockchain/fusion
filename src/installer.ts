@@ -4,7 +4,7 @@ import * as fs from 'fs';
 
 export class Installer {
 
-    protected static readonly executable = 'venom-data-producer';
+    protected static readonly executable = 'data_producer';
 
     static EnsureInstall(installPath: string) {
         const fullPath = path.resolve(installPath);
@@ -23,7 +23,7 @@ export class Installer {
         execSync(`mkdir -p "${fullPath}"`, { stdio: 'inherit'});
 
         // TODO: ??? change url to final public
-        execSync(`git clone git@dev.venom.rs:tools/producer/server/source.git "${fullPath}"`, {
+        execSync(`git clone https://github.com/venom-blockchain/fusion-producer.git "${fullPath}"`, {
             stdio: 'inherit',
             cwd: fullPath
         });

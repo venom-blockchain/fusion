@@ -1,5 +1,5 @@
 {
-  "name": "fusion-consumer",
+  "name": "@venom-blockchain/fusion",
   "version": "0.0.1",
   "description": "Consumer provides a set of types for reading and processing data from fusion data producer",
   "scripts": {
@@ -9,7 +9,7 @@
   "types": "dist/index.d.ts",
   "files": [
     "/dist",
-    "venom_data_producer.proto"
+    "data_producer.proto"
   ],
   "devDependencies": {
     "typescript": "^5.2.2",

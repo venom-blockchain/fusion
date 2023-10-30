@@ -59,7 +59,7 @@ export class Indexer {
                 './' + base,
                 [
                     '--config', `${dataFolder}/config.yaml`,
-                    '--global-config', `${dataFolder}/ton-global.config.json`
+                    '--global-config', `${dataFolder}/global.config.json`
                 ],
                 {
                     cwd: dir

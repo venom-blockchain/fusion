@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package venom_data_producer;
+package data_producer;
 
 enum MessageType {
   UNSPECIFIED = 0;
