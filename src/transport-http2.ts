@@ -21,7 +21,7 @@ export class TransportHttp2 implements Transport {
         this.url = url;
         this.messageDecoder = decoder;
 
-        const root = loadSync(path.resolve('./data_producer.proto'));
+        const root = loadSync(path.resolve(__dirname, '../', 'data_producer.proto'));
 
         this.message = root.lookupType("Message");
     }

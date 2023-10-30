@@ -28,12 +28,6 @@ export class Installer {
             cwd: fullPath
         });
 
-        // TODO: ??? remove only for testing
-        execSync(`git checkout dev`, {
-            stdio: 'inherit',
-            cwd: fullPath
-        });
-
         // compile
         execSync(`cargo build --release --features venom`, {
             stdio: 'inherit',

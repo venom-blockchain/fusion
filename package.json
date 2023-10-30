@@ -1,6 +1,6 @@
 {
   "name": "@venom-blockchain/fusion",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "Consumer provides a set of types for reading and processing data from fusion data producer",
   "scripts": {
     "build": "tsup src/*.ts --format cjs --dts --minify --clean --sourcemap"
