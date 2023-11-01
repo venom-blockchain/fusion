@@ -70,3 +70,12 @@ export interface AddressOrCodeHash {
     address?: string;
     code_hash?: string;
 }
+
+export interface Block {
+    id: string;
+    seq_no: number;
+    boc: string;
+    file_hash: string;
+    shard: string;
+    workchain_id: number;
+}

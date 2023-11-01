@@ -1,6 +1,6 @@
 {
   "name": "@venom-blockchain/fusion",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "Consumer provides a set of types for reading and processing data from fusion data producer",
   "scripts": {
     "build": "tsup src/*.ts --format cjs --dts --minify --clean --sourcemap"
@@ -12,11 +12,12 @@
     "data_producer.proto"
   ],
   "devDependencies": {
-    "typescript": "^5.2.2",
     "@types/node": "^20.8.9",
-    "tsup": "^7.2.0"
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@venom-blockchain/fusion-codec": "^0.0.2",
     "nekoton-wasm": "^1.3.1",
     "protobufjs": "^7.2.5"
   }

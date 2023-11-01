@@ -67,9 +67,7 @@ export class Indexer {
             );
 
             if (!this.transport.onProcessStarted(child)) {
-                child.stdout.on('data', (data) => {
-                    process.stdout.write(data);
-                });
+                child.stdout.on('data', process.stdout.write);
             }
 
             child.on('exit', function (code, signal) {

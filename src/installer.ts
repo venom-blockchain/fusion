@@ -4,13 +4,12 @@ import * as fs from 'fs';
 
 export class Installer {
 
-    protected static readonly executable = 'data_producer';
+    protected static readonly executable = 'fusion-producer';
 
     static EnsureInstall(installPath: string) {
         const fullPath = path.resolve(installPath);
         const execFullPath = path.resolve(fullPath + '/target/release/' + this.executable);
         if (fs.existsSync(execFullPath)) {
-            // TODO: ??? check version and auto update
             return { fullPath, execFullPath};
         }
 
@@ -22,19 +21,16 @@ export class Installer {
 
         execSync(`mkdir -p "${fullPath}"`, { stdio: 'inherit'});
 
-        // TODO: ??? change url to final public
         execSync(`git clone https://github.com/venom-blockchain/fusion-producer.git "${fullPath}"`, {
             stdio: 'inherit',
             cwd: fullPath
         });
 
-        // compile
         execSync(`cargo build --release --features venom`, {
             stdio: 'inherit',
             cwd: fullPath
         });
 
-        // check results
         if (!fs.existsSync(execFullPath)) {
             throw Error("unknown error during compilation");
         }
