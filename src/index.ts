@@ -5,5 +5,5 @@ export * from './message-decoder';
 export * from './transport';
 export * from './transport-http2';
 export * from './transport-stdio';
-export * from './mock-transport';
+export * from './transport-mock';
 export * from './types';

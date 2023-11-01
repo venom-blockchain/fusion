@@ -1,4 +1,5 @@
 export enum TransportType {
+    mock = 'Mock',
     stdio = 'Stdio',
     http2 = 'Http2'
 }

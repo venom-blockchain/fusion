@@ -14,6 +14,7 @@ import {
     AddressOrCodeHash
 } from './types';
 import { MessageDecoder } from './message-decoder';
+import { TransportMock } from './transport-mock';
 
 export class Indexer {
 
@@ -35,13 +36,23 @@ export class Indexer {
         this.config = config;
 
         this.skipStart = false;
-        if (config.transport == TransportType.stdio) {
-            this.transport = new TransportStdio();
-        } else if (config.transport == TransportType.http2) {
-            const messageDecoder = new MessageDecoder(this.config.filters, this.config.abiPath);
-            this.transport = new TransportHttp2(this.config.url ?? this.http2Url(), messageDecoder);
-            if (this.config.url) {
-                this.skipStart = true;
+
+        switch (config.transport) {
+            case TransportType.http2: {
+                const messageDecoder = new MessageDecoder(this.config.filters, this.config.abiPath);
+                this.transport = new TransportHttp2(this.config.url ?? this.http2Url(), messageDecoder);
+                if (this.config.url) {
+                    this.skipStart = true;
+                }
+                break;
+            } case TransportType.stdio: {
+                this.transport = new TransportStdio();
+                break;
+            } case TransportType.mock: {
+                this.transport = new TransportMock(config);
+                break;
+            } default: {
+                throw Error('unsupported transport type');
             }
         }
     }

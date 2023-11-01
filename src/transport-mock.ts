@@ -1,5 +1,5 @@
 import { decodeInput, decodeEvent, MethodName } from 'nekoton-wasm';
-import * as fs from 'fs/promises';
+import * as fs from 'fs';
 import * as path from 'path';
 
 import * as Codec from '@venom-blockchain/fusion-codec'
@@ -26,8 +26,8 @@ export class TransportMock implements Transport {
         return true;
     }
 
-    async run(subscribers: any) {
-        const files = await fs.readdir(path.resolve(this.config.abiPath));
+    run(subscribers: any) {
+        const files = fs.readdirSync(path.resolve(this.config.abiPath));
         const contracts: Contracts = {};
         const msgsBySender: {[key: string]: MessageEntry} = {};
         const msgsByReceiver: {[key: string]: MessageEntry} = {};
@@ -68,7 +68,7 @@ export class TransportMock implements Transport {
             }
         })
 
-        const { data: { blocks } } = JSON.parse(await fs.readFile(path.resolve(this.config.dbPath), 'utf8'));
+        const { data: { blocks } } = JSON.parse(fs.readFileSync(path.resolve(this.config.dbPath), 'utf8'));
 
         blocks.forEach((b: Block) => {
             const { transactions } = JSON.parse(Codec.deserialize(b.boc, 'block'))
@@ -101,7 +101,6 @@ export class TransportMock implements Transport {
 function decodeMsg(contracts, msg, entryType) {
     return Object.keys(contracts).map((handlerName) => {
         const { abi, entries } = contracts[handlerName];
-        // console.log(contracts[handlerName])
         return entries.map((entry: { name: string, message: { name: MethodName; }; }) => {
             if (entryType === 'message') {
                 try {
