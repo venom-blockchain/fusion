@@ -23,16 +23,7 @@ export class Indexer {
     protected readonly transport: Transport;
     protected readonly transportType;
 
-    constructor(config:
-        { transport: TransportType.http2, url: string}
-        |   {
-                transport: TransportType,
-                installPath: string;
-                dbPath: string;
-                abiPath: string;
-                filters: MessageFilter[]
-            }
-    ) {
+    constructor(config: IndexerConfig) {
         this.config = config;
 
         this.skipStart = false;
