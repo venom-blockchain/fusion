@@ -5,8 +5,11 @@ import * as path from 'path';
 import { Transport } from './transport';
 import { ChildProcessWithoutNullStreams } from 'child_process';
 import { MessageDecoder } from './message-decoder';
+import { Logger } from './logger';
 
 export class TransportHttp2 implements Transport {
+
+    protected logger: Logger;
 
     protected url: string;
     protected subscribers: any;
@@ -24,6 +27,8 @@ export class TransportHttp2 implements Transport {
         const root = loadSync(path.resolve(__dirname, '../', 'data_producer.proto'));
 
         this.message = root.lookupType("Message");
+
+        this.logger = Logger.createLogger({ level: process.env.LOG_LEVEL });
     }
 
     onProcessStarted(process: ChildProcessWithoutNullStreams) : boolean {
@@ -64,7 +69,10 @@ export class TransportHttp2 implements Transport {
             while ((actualData.length - reader.pos) > SMALEST_MESSAGE) {
                 const length = reader.uint64();
                 if (length.high > 0) {
-                    console.log(`http2 stream error: wrong length`);
+                    this.logger.log({
+                        level: 'info',
+                        message: `http2 stream error: wrong length`,
+                    });
                     throw Error('message length too large')
                 } else if (length.low > (actualData.length - reader.pos)) {
                     break;
@@ -76,8 +84,8 @@ export class TransportHttp2 implements Transport {
                 if (this.subscribers[message.filterName]) {
                     const messageObject = this.message.toObject(message, { defaults: true, longs: String });
                     this.subscribers[message.filterName](this.messageDecoder.decode(messageObject));
-                    }
                 }
+            }
 
             if (actualData.length > nextPos) {
                 buffer = actualData.slice(nextPos);
@@ -89,14 +97,20 @@ export class TransportHttp2 implements Transport {
 
     protected onStreamError(err: any) {
         if ((Date.now() - this.startTime) > TransportHttp2.START_TIMEOUT ) {
-            console.log(`http2 stream error: ${err}, reconnecting...`);
+            this.logger.log({
+                level: 'info',
+                message: `http2 stream error: ${err}, reconnecting...`,
+            });
         }
         this.connect();
     }
 
     protected onClientError(err: any) {
         if ((Date.now() - this.startTime) > TransportHttp2.START_TIMEOUT ) {
-            console.log(`http2 connection error: ${err}`);
+            this.logger.log({
+                level: 'info',
+                message: `http2 connection error: ${err}`,
+            });
         }
     }
 }

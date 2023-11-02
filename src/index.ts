@@ -1,4 +1,5 @@
 export * from './indexer';
+export * from './logger';
 export * from './test-indexer';
 export * from './installer';
 export * from './message-decoder';

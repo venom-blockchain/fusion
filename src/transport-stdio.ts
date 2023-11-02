@@ -1,9 +1,15 @@
 import { ChildProcessWithoutNullStreams } from 'child_process';
 import { Transport } from './transport';
+import { Logger } from './logger';
 
 export class TransportStdio implements Transport {
 
+    protected logger: Logger;
     protected process: ChildProcessWithoutNullStreams;
+
+    constructor() {
+        this.logger = Logger.createLogger({ level: process.env.LOG_LEVEL });
+    }
 
     onProcessStarted(process: ChildProcessWithoutNullStreams) : boolean {
         this.process = process;
